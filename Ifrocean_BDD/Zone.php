@@ -238,7 +238,7 @@ class Zone extends Polygone {
         }
     }
 
-    public function supprimer() {
+    public function supprimer($id) {
         $pdo = new PDO("mysql:host=" . Config::SERVERNAME
                 . ";dbname=" . Config::DBNAME
                 , Config::USERNAME
@@ -247,7 +247,7 @@ class Zone extends Polygone {
         $req = $pdo->prepare("delete from zones"
                 . " where id=:cle");
 
-        $req->bindParam(":cle", $this->id);
+        $req->bindParam(":cle", $id);
 
         $req->execute();
     }

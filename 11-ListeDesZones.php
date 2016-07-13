@@ -73,8 +73,9 @@ and open the template in the editor.
             <?php 
             $especes=espece::getAllEspeces();
             $zones=Zone::getAllZones();
-            foreach ($zones as $zone){
-                //foreach($especes as $espece){
+            //foreach($especes as $espece){
+                foreach ($zones as $zone){
+                
  
             ?>
             <tr>
@@ -125,7 +126,7 @@ and open the template in the editor.
             
               <?php  
               }
-           // }
+            //}
                 ?>
         </table>
     </body>
