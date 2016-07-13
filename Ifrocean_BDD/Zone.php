@@ -58,6 +58,7 @@ class Zone extends Polygone {
                   . ":latDdegre, :latDmin, :latDsec, :longDdegre, :longDmin, :longDsec, :surface, :latA, :longA, :latB, :longB, :latC, :longC, :latD, :longD)");
           
           
+
     
            
             $req->bindParam(":latAdegre", $this->lesPoints[0]->degreLat);
@@ -110,6 +111,68 @@ class Zone extends Polygone {
         //fermeture
         $pdo = null;
     }
+    
+    public static function modify($cle){
+        try {
+            $pdo = new PDO("mysql:host=" . Config::SERVERNAME
+                    . ";dbname=" . Config::DBNAME
+                    , Config::USERNAME
+                    , Config::PASSWORD);
+            
+             $req->$pdo->prepare("UPDATE zone SET latAdegre = :latBdegre , latAmin = :latAmin, latAsec = :latAsec , longAdegre =:longAdegre, longAmin = :longAmin, longAsec = :longAsec, "
+                  . "latBdegre = :latBdegre, latBmin = latBmin , latBsec = :latBsec , longBdegre = :longBdegre, longBmin = :longBmin, longBsec = :longBsec, "
+                  . "latCdegre, latCmin, latCsec, longCdegre, longCmin, longCsec, "
+                  . "latDdegre = :latDdegre , latDmin = :latDmin , latDsec = :latDsec , longDdegre = :longDdegre , longDmin = :longDmin ,"
+                  . " longDsec = :longDsec , surface = :surface , latA = :latA , longA = :longA, latB = :latB, longB = :longB, latC= :latC, "
+                  . "longC = :longC, latD = :latD, longD = :longD WHERE id = :cle");
+             
+            $req->bindParam(":latAdegreM", $this->lesPoints[0]->degreLat);
+            $req->bindParam(":latAminM", $this->lesPoints[0]->minuteLat);
+            $req->bindParam(":latAsecM", $this->lesPoints[0]->secondeLat);  
+            $req->bindParam(":longAdegreM", $this->lesPoints[0]->degreLong);
+            $req->bindParam(":longAminM", $this->lesPoints[0]->minuteLong);
+            $req->bindParam(":longAsecM", $this->lesPoints[0]->secondeLong);
+            $req->bindParam(":latBdegreM", $this->lesPoints[1]->degreLat);
+            $req->bindParam(":latBminM", $this->lesPoints[1]->minuteLat);
+            $req->bindParam(":latBsecM", $this->lesPoints[1]->secondeLat);
+            $req->bindParam(":longBdegreM", $this->lesPoints[1]->degreLong);
+            $req->bindParam(":longBminM", $this->lesPoints[1]->minuteLong);
+            $req->bindParam(":longBsecM", $this->lesPoints[1]->secondeLong);
+            $req->bindParam(":latCdegreM", $this->lesPoints[2]->degreLat);
+            $req->bindParam(":latCminM", $this->lesPoints[2]->minuteLat);
+            $req->bindParam(":latCsecM", $this->lesPoints[2]->secondeLat);
+            $req->bindParam(":longCdegreM", $this->lesPoints[2]->degreLong);
+            $req->bindParam(":longCminM", $this->lesPoints[2]->minuteLong);
+            $req->bindParam(":longCsecM", $this->lesPoints[2]->secondeLong);
+            $req->bindParam(":latDdegreM", $this->lesPoints[3]->degreLat);
+            $req->bindParam(":latDminM", $this->lesPoints[3]->minuteLat);
+            $req->bindParam(":latDsecM", $this->lesPoints[3]->secondeLat);
+            $req->bindParam(":longDdegreM", $this->lesPoints[3]->degreLong);
+            $req->bindParam(":longDminM", $this->lesPoints[3]->minuteLong);
+            $req->bindParam(":longDsecM", $this->lesPoints[3]->secondeLong);
+            $req->bindParam(":surfaceM", $this->surface);
+            $req->bindParam(":plage_idM", $this->plage_id);
+             $req->bindParam(":latAM", $this->lesPoints[0]->latitudeNumerique);
+             $req->bindParam(":longAM", $this->lesPoints[0]->longitudeNumerique);
+             $req->bindParam(":latBM", $this->lesPoints[1]->latitudeNumerique);
+             $req->bindParam(":longBM", $this->lesPoints[1]->longitudeNumerique);
+             $req->bindParam(":latCM", $this->lesPoints[2]->latitudeNumerique);
+             $req->bindParam(":longCM", $this->lesPoints[2]->longitudeNumerique);
+             $req->bindParam(":latDM", $this->lesPoints[3]->latitudeNumerique);
+             $req->bindParam(":longDM", $this->lesPoints[3]->longitudeNumerique);
+             
+             
+            $req->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+
+
+        //fermeture
+        $pdo = null;
+    }
+        
+    
 
     public static function getAllZones() {
         $pdo = new PDO("mysql:host=" . Config::SERVERNAME

@@ -7,9 +7,9 @@ class Triangle extends Polygone {
     
       public $id;
 
-    public function __construct($p1, $p2, $p3) {
-        $desPoints = array($p1, $p2, $p3);
-        $this->id = $cle;
+    public function __construct($p1, $p2, $p3,$cle=0) { // la cle initialiser a 0 
+        $desPoints = array($p1, $p2, $p3);   
+        $this->id = $cle ;
         parent::__construct($desPoints);
     }
 

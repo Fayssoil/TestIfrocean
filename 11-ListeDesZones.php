@@ -1,5 +1,6 @@
 <?php
 include_once 'Ifrocean_BDD/Zone.php';
+include_once 'Ifrocean_BDD/Espece.php';
 
 ?>
 
@@ -69,13 +70,17 @@ and open the template in the editor.
                 <th>Supprimer</th>
                 
             </tr>
-            <?php $zones=Zone::getAllZones();
+            <?php 
+            $especes=espece::getAllEspeces();
+            $zones=Zone::getAllZones();
             foreach ($zones as $zone){
+                //foreach($especes as $espece){
+ 
             ?>
             <tr>
                 <td> Plage N°<?php echo $zone->plage_id ?></td>
                 <td> Zone N°<?php echo $zone->id ?></td> 
-                <td>Nom espece : <?php echo $zone->nomespece ?></td>
+                <td>Nom espece : <?php echo $espece->nomespece ?></td>
                 <td>Quantité<?php echo $zone->quantite ?></td>
                 
                 <td>Lat A</td>
@@ -114,12 +119,13 @@ and open the template in the editor.
 
                 
                 <!-- A créer : voir zone--><td><a href="11-VoirZone.php?id=<?php echo $zone->id ?>">Voir</a></td>
-                <!-- A créer : modifier zone--><td><a href="11-ModifierZone.php?id=<?php echo $zone->id ?>">Modifier</a></td>
+                <!-- A créer : modifier zone--><td><a href="11-BDD-ModifierZone.php?id=<?php echo $zone->id ?>">Modifier</a></td>
                 <td><a href="11-SupprimerZone.php?id=<?php echo $zone->id ?>">Supprimer</a></td>
             </tr> 
             
               <?php  
-            }
+              }
+           // }
                 ?>
         </table>
     </body>

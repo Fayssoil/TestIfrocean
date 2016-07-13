@@ -7,8 +7,7 @@ class Espece {
 
     public $id;
     public $nomespece;
-   
-    
+
 
 
     public function __construct($nomespece, $cle = 0) {
@@ -35,22 +34,26 @@ class Espece {
           $req = $pdo->prepare("INSERT INTO especes(nomespece) "
                   . "VALUES (:nomespece)");
           
-          
+         /* "SELECT zones_id, nomespece, quantite 
+          * FROM `zones_has_especes`INNER JOIN zones ON zones_has_especes.zones_id = zones.id 
+            INNER JOIN especes ON zones_has_especes.especes_id = especes.id " */
     
    
-            $req->bindParam(":nomespece", $this->nomespece);
+            /*$req->bindParam(":nomespece", $this->nomespece);
             
-            $req->execute();
+            $req->execute();*/
             
+
             
-            /*ne marche pas
-         $req2 = $pdo->prepare("INSERT INTO zones_has_especes(zone_id, espece_id) "
+           
+            $req2 = $pdo->prepare("INSERT INTO zones_has_especes(zone_id, espece_id,quantite) "
                   . "VALUES (:zone_id,:espece_id, :quantite)");
            
             $req2->bindParam(":espece_id", $this->espece_id);
             $req2->bindParam(":quantite", $this->quantite);
             $req2->bindParam(":zone_id", $this->zone_id);
-            $req2->execute();*/
+            
+            $req2->execute();
             
             
         } catch (PDOException $e) {
@@ -80,13 +83,21 @@ class Espece {
                 , Config::USERNAME
                 , Config::PASSWORD);
 
-        $req = $pdo->prepare("SELECT zones_id, nomespece, quantite FROM `especes`");
         
-
+        /*// donne le nom de l'espece qui se trouve dans tel zone 
+        $nomEsp = $pdo->prepare("SELECT nomespece "
+                                ."FROM especes ,zones_has_especes "
+                                . "WHERE especes.id = zones_has_especes.espece_id "
+                                );
+        $nomEsp ->bindParam(":nomespece", $this->nomespece);
+        $nomEsp ->execute();
+            */
+            
+        $req = $pdo->prepare("SELECT zones_id, nomespece, quantite FROM `especes`");
         $req->execute();
 
         if ($req->rowCount() >= 1) {
-      
+            $especes = array();
             while ($ligne = $req->fetch()) {
                 $especes[] = new Espece($ligne["nomespece"], $ligne["id"]);
                 
@@ -102,8 +113,12 @@ class Espece {
                 , Config::USERNAME
                 , Config::PASSWORD);
 
-        $req = $pdo->prepare("select id, nomespece from especes"
-                . " where id=:cle");
+      /*  $req = $pdo->prepare("select id, nomespece from especes"
+                . " where id=:cle");*/
+        $req = $pdo->prepare("SELECT nomespece "
+                                ."FROM especes ,zones_has_especes "
+                                . "WHERE especes.id = zones_has_especes.espece_id "
+                                . "AND zone_has_espece = :cle");
 
         
         $req->bindParam(":cle", $cle);

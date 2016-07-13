@@ -73,9 +73,9 @@ class Plage {
         $req->execute();
 
         if ($req->rowCount() >= 1) {
-            
+            //le id est en auto-incremente on a pas a le gerer 
             while ($ligne = $req->fetch()) {
-                $plages[] = new Plage($ligne["nomplage"], $ligne["superficie"], $ligne["ville"], $ligne["date_prelevement"], $ligne["id"]);
+                $plages[] = new Plage($ligne["nomplage"], $ligne["superficie"], $ligne["ville"], $ligne["date_prelevement"]/*, $ligne["id"]*/);
                 
             }
           
@@ -111,7 +111,7 @@ class Plage {
         }
     }
 
-    public function supprimer() {
+    public function supprimer($cle) {
         $pdo = new PDO("mysql:host=" . Config::SERVERNAME
                 . ";dbname=" . Config::DBNAME
                 , Config::USERNAME
